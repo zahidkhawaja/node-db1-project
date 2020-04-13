@@ -16,4 +16,14 @@ router.get("/:id", (req, res) => {
     .catch(error => res.status(500).json({ error: error.message }))
 });
 
+router.post("/", (req, res) => {
+    const accountData = req.body;
+    db.select("*").from("accounts").insert(accountData, "id")
+    .then(ids => {
+        const id = ids[0];
+        db.select("*").from("accounts").where({ id }).first()
+        .then(post => res.status(200).json({ data: post}))
+        .catch(error => res.status(500).json({ error: error.message }))
+    })});
+
 module.exports = router;
