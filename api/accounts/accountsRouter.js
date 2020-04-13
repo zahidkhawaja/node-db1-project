@@ -26,4 +26,10 @@ router.post("/", (req, res) => {
         .catch(error => res.status(500).json({ error: error.message }))
     })});
 
+router.delete("/:id", (req, res) => {
+    db.select("*").from("accounts").where("id", req.params.id).del()
+    .then(num => res.status(200).json(num))
+    .catch(error => res.status(500).json({ error: error.message }))
+});
+
 module.exports = router;
