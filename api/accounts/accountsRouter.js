@@ -6,7 +6,9 @@ const router = express.Router();
 
 // GET accounts
 router.get("/", (req, res) => {
-    db("accounts")
+    const { limit } = req.query;
+    limit ? db("accounts").limit(limit).then(accounts => res.status(200).json({ data: accounts })) 
+    : db("accounts")
     .then(accounts => res.status(200).json({ data: accounts }))
     .catch(error => res.status(500).json({ error: error.message }))
 });
