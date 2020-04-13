@@ -10,4 +10,10 @@ router.get("/", (req, res) => {
     .catch(error => res.status(500).json({ error: error.message }))
 });
 
+router.get("/:id", (req, res) => {
+    db.select("*").from("accounts").where("id", req.params.id)
+    .then(account => res.status(200).json({ data: account }))
+    .catch(error => res.status(500).json({ error: error.message }))
+});
+
 module.exports = router;
